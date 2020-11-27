@@ -1,42 +1,42 @@
-import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
-import { Input as Inp, Checkbox, Button } from "semantic-ui-react";
-import Axios from "axios";
-import { env, url } from "../../urls";
-import { connect } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
-import { Redirect } from "react-router-dom";
+import React, {Component} from 'react';
+import {Grid} from '@material-ui/core';
+import {Input as Inp, Checkbox, Button} from 'semantic-ui-react';
+import Axios from 'axios';
+import {env, url} from '../../urls';
+import {connect} from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
+import {Redirect} from 'react-router-dom';
 
 toast.configure();
 
 export class Login extends Component {
   state = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     clikedLogin: false,
   };
   takeInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({[e.target.name]: e.target.value});
   };
 
   clickLogin = async () => {
-    this.setState({ clikedLogin: true });
+    this.setState({clikedLogin: true});
     let result = await Axios.post(
-      env === "dev" ? url[0] + "/admin/login" : url[1] + "/admin/login",
+      env === 'dev' ? url[0] + '/admin/login' : url[1] + '/admin/login',
       this.state
     );
     if (result.data.invalid) {
-      toast.error("Invalid email and password");
+      toast.error('Invalid email and password');
     } else if (result.data.logged) {
       this.props.loginAdmin(result.data);
-      toast.success("Login Successfull");
+      toast.success('Login Successfull');
     } else if (!result.exist) {
       toast.warning("Account doesn't exist");
     }
 
     console.log(result);
-    this.setState({ clikedLogin: false });
+    this.setState({clikedLogin: false});
   };
   render() {
     if (this.props.logged) {
@@ -44,7 +44,7 @@ export class Login extends Component {
     }
     return (
       <div
-        style={{ height: "100vh", width: "100vw", backgroundColor: "#2979ff" }}
+        style={{height: '100vh', width: '100vw', backgroundColor: '#2979ff'}}
       >
         <Grid container>
           <Grid item xs={false} sm={2}></Grid>
@@ -53,30 +53,30 @@ export class Login extends Component {
             xs={12}
             sm={8}
             style={{
-              paddingTop: "120px",
-              height: "100vh",
+              paddingTop: '120px',
+              height: '100vh',
             }}
           >
             <div
               style={{
-                height: "350px",
-                backgroundColor: "white",
-                width: "420px",
-                margin: "0 auto",
-                borderRadius: "5px",
+                height: '350px',
+                backgroundColor: 'white',
+                width: '420px',
+                margin: '0 auto',
+                borderRadius: '5px',
               }}
             >
               <Grid container direction="row" spacing={3}>
                 <Grid
                   item
                   xs={12}
-                  style={{ textAlign: "center", paddingTop: "20px" }}
+                  style={{textAlign: 'center', paddingTop: '20px'}}
                 >
-                  <h1 style={{ fontFamily: "serif" }}>
+                  <h1 style={{fontFamily: 'serif'}}>
                     Sign in into your account
                   </h1>
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid item xs={12} style={{textAlign: 'center'}}>
                   <Inp
                     placeholder="email"
                     icon="mail"
@@ -85,7 +85,7 @@ export class Login extends Component {
                     onChange={this.takeInput}
                   />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid item xs={12} style={{textAlign: 'center'}}>
                   <Inp
                     type="password"
                     placeholder="password"
@@ -95,18 +95,18 @@ export class Login extends Component {
                     onChange={this.takeInput}
                   />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid item xs={12} style={{textAlign: 'center'}}>
                   <Checkbox label="Keep me signed in" />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Grid item xs={12} style={{textAlign: 'center'}}>
                   <Button
-                    color="pink"
+                    color="white"
                     onClick={this.clickLogin}
                     loading={this.state.clikedLogin}
-                    style={{color:"#f50057"}}
+                    style={{color: '#f50057'}}
                   >
-                    {" "}
-                    Login{" "}
+                    {' '}
+                    Login{' '}
                   </Button>
                 </Grid>
               </Grid>
@@ -119,9 +119,8 @@ export class Login extends Component {
   }
 }
 
-
 const adminLogin = (data) => ({
-  type: "LOGIN",
+  type: 'LOGIN',
   data,
 });
 
